@@ -1,0 +1,701 @@
+-- phpMyAdmin SQL Dump
+-- version 4.4.10
+-- http://www.phpmyadmin.net
+--
+-- Servidor: localhost:8889
+-- Tiempo de generación: 06-12-2015 a las 20:45:25
+-- Versión del servidor: 5.5.42
+-- Versión de PHP: 5.6.10
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Base de datos: `Consulta_Medica`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Bloque`
+--
+
+CREATE TABLE `Bloque` (
+  `idBloque` int(11) NOT NULL,
+  `Duracion_Bloque` varchar(45) DEFAULT NULL,
+  `Estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Bloque/turnos`
+--
+
+CREATE TABLE `Bloque/turnos` (
+  `Bloque_idBloque` int(11) NOT NULL,
+  `Turnos_idTurnos` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Consulta`
+--
+
+CREATE TABLE `Consulta` (
+  `Medico_Personas_Rut` int(11) DEFAULT NULL,
+  `Paciente_Personas_Rut` int(11) DEFAULT NULL,
+  `fechaAtencion` varchar(45) DEFAULT NULL,
+  `horaAtencion` varchar(45) DEFAULT NULL,
+  `idConsulta` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `DetalleFichaPaciente`
+--
+
+CREATE TABLE `DetalleFichaPaciente` (
+  `fechaAtencion` varchar(45) NOT NULL,
+  `Diagnostico` varchar(100) DEFAULT NULL,
+  `FichaPaciente_NumeroFicha` varchar(45) NOT NULL,
+  `Medico_Personas_Rut` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Dia`
+--
+
+CREATE TABLE `Dia` (
+  `idDia` int(11) NOT NULL,
+  `NombreDia` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Dia`
+--
+
+INSERT INTO `Dia` (`idDia`, `NombreDia`) VALUES
+(1, 'Lunes'),
+(2, 'Martes'),
+(3, 'Miercoles'),
+(4, 'Jueves'),
+(5, 'Viernes'),
+(6, 'Sabado'),
+(7, 'Domingo');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Especialidad`
+--
+
+CREATE TABLE `Especialidad` (
+  `IdEspecialidad` int(11) NOT NULL,
+  `NombreEspecialidad` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Especialidad`
+--
+
+INSERT INTO `Especialidad` (`IdEspecialidad`, `NombreEspecialidad`) VALUES
+(1, 'radiologia');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Estado`
+--
+
+CREATE TABLE `Estado` (
+  `Estado_id` int(11) NOT NULL,
+  `Estado_nombre` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Estado`
+--
+
+INSERT INTO `Estado` (`Estado_id`, `Estado_nombre`) VALUES
+(1, 'Disponible'),
+(2, 'Ocupado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `estado_civil`
+--
+
+CREATE TABLE `estado_civil` (
+  `estci_id` int(11) NOT NULL,
+  `estci_nombre` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `estado_civil`
+--
+
+INSERT INTO `estado_civil` (`estci_id`, `estci_nombre`) VALUES
+(1, 'soltero'),
+(2, 'casado');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `FichaPaciente`
+--
+
+CREATE TABLE `FichaPaciente` (
+  `Paciente_Personas_Rut` int(11) NOT NULL,
+  `NumeroFicha` varchar(45) NOT NULL,
+  `fechaCreacion` varchar(45) DEFAULT NULL,
+  `estado` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Horario`
+--
+
+CREATE TABLE `Horario` (
+  `Horario_id` int(11) NOT NULL,
+  `Medico_Personas_Rut` int(11) NOT NULL,
+  `Horario_fecha` date DEFAULT NULL,
+  `Horaio_hora_inicio` time DEFAULT NULL,
+  `Horario_hora_fin` time DEFAULT NULL,
+  `Estado_Estado_id` int(11) NOT NULL,
+  `Dia_idDia` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Horario`
+--
+
+INSERT INTO `Horario` (`Horario_id`, `Medico_Personas_Rut`, `Horario_fecha`, `Horaio_hora_inicio`, `Horario_hora_fin`, `Estado_Estado_id`, `Dia_idDia`) VALUES
+(1, 179427672, '2015-12-07', '08:00:00', '09:00:00', 1, 1),
+(2, 179427672, '2015-12-07', '10:00:00', '11:00:00', 1, 1),
+(3, 179427672, '2015-12-07', '11:00:00', '12:00:00', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Horario_has_Turnos`
+--
+
+CREATE TABLE `Horario_has_Turnos` (
+  `Horario_Horario_id` int(11) NOT NULL,
+  `Turnos_idTurnos` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Horario_has_Turnos`
+--
+
+INSERT INTO `Horario_has_Turnos` (`Horario_Horario_id`, `Turnos_idTurnos`) VALUES
+(1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `lab/med`
+--
+
+CREATE TABLE `lab/med` (
+  `medicamentos_IdMedicamento` int(11) NOT NULL,
+  `laboratorio_IdLaboratorio` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `laboratorio`
+--
+
+CREATE TABLE `laboratorio` (
+  `IdLaboratorio` int(11) NOT NULL,
+  `NombreLab` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `medicamentos`
+--
+
+CREATE TABLE `medicamentos` (
+  `IdMedicamento` int(11) NOT NULL,
+  `NombreMedicamento` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Medico`
+--
+
+CREATE TABLE `Medico` (
+  `Personas_Rut` int(11) NOT NULL,
+  `Sala_idSala` int(11) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Medico`
+--
+
+INSERT INTO `Medico` (`Personas_Rut`, `Sala_idSala`) VALUES
+(179427672, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Medico_has_Especialidad`
+--
+
+CREATE TABLE `Medico_has_Especialidad` (
+  `Medico_Personas_Rut` int(11) NOT NULL,
+  `Especialidad_IdEspecialidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Medico_has_Especialidad`
+--
+
+INSERT INTO `Medico_has_Especialidad` (`Medico_Personas_Rut`, `Especialidad_IdEspecialidad`) VALUES
+(179427672, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Paciente`
+--
+
+CREATE TABLE `Paciente` (
+  `Personas_Rut` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Personas`
+--
+
+CREATE TABLE `Personas` (
+  `Rut` int(11) NOT NULL,
+  `Nombre` varchar(45) DEFAULT NULL,
+  `Apellido` varchar(45) DEFAULT NULL,
+  `FechaNacimiento` date DEFAULT NULL,
+  `sexo_sexo_id` int(11) NOT NULL,
+  `estado_civil_estci_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Personas`
+--
+
+INSERT INTO `Personas` (`Rut`, `Nombre`, `Apellido`, `FechaNacimiento`, `sexo_sexo_id`, `estado_civil_estci_id`) VALUES
+(179427672, 'guido ', 'toro', '1991-08-23', 1, 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `pruebaboolean`
+--
+
+CREATE TABLE `pruebaboolean` (
+  `estado` tinyint(1) NOT NULL DEFAULT '0',
+  `pruebabooleancol` varchar(45) DEFAULT 'hola'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `receta/medicamento`
+--
+
+CREATE TABLE `receta/medicamento` (
+  `recetas_NumReceta` int(11) NOT NULL,
+  `medicamentos_IdMedicamento` int(11) NOT NULL,
+  `Indicaciones` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `recetas`
+--
+
+CREATE TABLE `recetas` (
+  `NumReceta` int(11) NOT NULL,
+  `DetalleFichaPaciente_fechaAtencion` varchar(45) NOT NULL,
+  `DetalleFichaPaciente_FichaPaciente_NumeroFicha` varchar(45) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Sala`
+--
+
+CREATE TABLE `Sala` (
+  `idSala` int(11) NOT NULL,
+  `Nombre` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Sala`
+--
+
+INSERT INTO `Sala` (`idSala`, `Nombre`) VALUES
+(1, 'radiologia');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `sexo`
+--
+
+CREATE TABLE `sexo` (
+  `sexo_id` int(11) NOT NULL,
+  `sexo_nombre` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `sexo`
+--
+
+INSERT INTO `sexo` (`sexo_id`, `sexo_nombre`) VALUES
+(1, 'masculino'),
+(2, 'femenino');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `SubEspecialidad`
+--
+
+CREATE TABLE `SubEspecialidad` (
+  `idSubEspecialidad` int(11) NOT NULL,
+  `NombreEspecialidad` varchar(45) DEFAULT NULL,
+  `especialidad_IdEspecialidad` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `Turnos`
+--
+
+CREATE TABLE `Turnos` (
+  `idTurnos` int(11) NOT NULL,
+  `Turnos` varchar(45) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `Turnos`
+--
+
+INSERT INTO `Turnos` (`idTurnos`, `Turnos`) VALUES
+(1, 'mañana'),
+(2, 'tarde'),
+(3, 'noche');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `Bloque`
+--
+ALTER TABLE `Bloque`
+  ADD PRIMARY KEY (`idBloque`);
+
+--
+-- Indices de la tabla `Bloque/turnos`
+--
+ALTER TABLE `Bloque/turnos`
+  ADD PRIMARY KEY (`Bloque_idBloque`,`Turnos_idTurnos`),
+  ADD KEY `fk_Bloque_has_Turnos_Turnos1_idx` (`Turnos_idTurnos`),
+  ADD KEY `fk_Bloque_has_Turnos_Bloque1_idx` (`Bloque_idBloque`);
+
+--
+-- Indices de la tabla `Consulta`
+--
+ALTER TABLE `Consulta`
+  ADD PRIMARY KEY (`idConsulta`),
+  ADD KEY `fk_Consulta_Paciente1_idx` (`Paciente_Personas_Rut`),
+  ADD KEY `fk_Consulta_Medico1` (`Medico_Personas_Rut`);
+
+--
+-- Indices de la tabla `DetalleFichaPaciente`
+--
+ALTER TABLE `DetalleFichaPaciente`
+  ADD PRIMARY KEY (`fechaAtencion`,`FichaPaciente_NumeroFicha`,`Medico_Personas_Rut`),
+  ADD KEY `fk_DetalleFichaPaciente_FichaPaciente1_idx` (`FichaPaciente_NumeroFicha`),
+  ADD KEY `fk_DetalleFichaPaciente_Medico1_idx` (`Medico_Personas_Rut`);
+
+--
+-- Indices de la tabla `Dia`
+--
+ALTER TABLE `Dia`
+  ADD PRIMARY KEY (`idDia`);
+
+--
+-- Indices de la tabla `Especialidad`
+--
+ALTER TABLE `Especialidad`
+  ADD PRIMARY KEY (`IdEspecialidad`);
+
+--
+-- Indices de la tabla `Estado`
+--
+ALTER TABLE `Estado`
+  ADD PRIMARY KEY (`Estado_id`);
+
+--
+-- Indices de la tabla `estado_civil`
+--
+ALTER TABLE `estado_civil`
+  ADD PRIMARY KEY (`estci_id`);
+
+--
+-- Indices de la tabla `FichaPaciente`
+--
+ALTER TABLE `FichaPaciente`
+  ADD PRIMARY KEY (`NumeroFicha`),
+  ADD KEY `fk_FichaPaciente_Paciente1` (`Paciente_Personas_Rut`);
+
+--
+-- Indices de la tabla `Horario`
+--
+ALTER TABLE `Horario`
+  ADD PRIMARY KEY (`Horario_id`),
+  ADD KEY `fk_Medico_has_Dia_Medico1_idx` (`Medico_Personas_Rut`),
+  ADD KEY `fk_Horario_Dia1_idx` (`Dia_idDia`),
+  ADD KEY `fk_Horario_Estado1_idx` (`Estado_Estado_id`);
+
+--
+-- Indices de la tabla `Horario_has_Turnos`
+--
+ALTER TABLE `Horario_has_Turnos`
+  ADD PRIMARY KEY (`Horario_Horario_id`,`Turnos_idTurnos`),
+  ADD KEY `fk_Horario_has_Turnos_Turnos1_idx` (`Turnos_idTurnos`),
+  ADD KEY `fk_Horario_has_Turnos_Horario1_idx` (`Horario_Horario_id`);
+
+--
+-- Indices de la tabla `lab/med`
+--
+ALTER TABLE `lab/med`
+  ADD PRIMARY KEY (`medicamentos_IdMedicamento`,`laboratorio_IdLaboratorio`),
+  ADD KEY `fk_lab/med_laboratorio1_idx` (`laboratorio_IdLaboratorio`);
+
+--
+-- Indices de la tabla `laboratorio`
+--
+ALTER TABLE `laboratorio`
+  ADD PRIMARY KEY (`IdLaboratorio`);
+
+--
+-- Indices de la tabla `medicamentos`
+--
+ALTER TABLE `medicamentos`
+  ADD PRIMARY KEY (`IdMedicamento`);
+
+--
+-- Indices de la tabla `Medico`
+--
+ALTER TABLE `Medico`
+  ADD PRIMARY KEY (`Personas_Rut`),
+  ADD KEY `fk_Medico_Personas_idx` (`Personas_Rut`),
+  ADD KEY `fk_Medico_Sala1_idx` (`Sala_idSala`);
+
+--
+-- Indices de la tabla `Medico_has_Especialidad`
+--
+ALTER TABLE `Medico_has_Especialidad`
+  ADD PRIMARY KEY (`Medico_Personas_Rut`,`Especialidad_IdEspecialidad`),
+  ADD KEY `fk_Medico_has_Especialidad_Especialidad1_idx` (`Especialidad_IdEspecialidad`),
+  ADD KEY `fk_Medico_has_Especialidad_Medico1_idx` (`Medico_Personas_Rut`);
+
+--
+-- Indices de la tabla `Paciente`
+--
+ALTER TABLE `Paciente`
+  ADD PRIMARY KEY (`Personas_Rut`),
+  ADD KEY `fk_Paciente_Personas1_idx` (`Personas_Rut`);
+
+--
+-- Indices de la tabla `Personas`
+--
+ALTER TABLE `Personas`
+  ADD PRIMARY KEY (`Rut`),
+  ADD KEY `fk_Personas_sexo1_idx` (`sexo_sexo_id`),
+  ADD KEY `fk_Personas_estado_civil1_idx` (`estado_civil_estci_id`);
+
+--
+-- Indices de la tabla `pruebaboolean`
+--
+ALTER TABLE `pruebaboolean`
+  ADD PRIMARY KEY (`estado`);
+
+--
+-- Indices de la tabla `receta/medicamento`
+--
+ALTER TABLE `receta/medicamento`
+  ADD PRIMARY KEY (`recetas_NumReceta`,`medicamentos_IdMedicamento`),
+  ADD KEY `fk_receta/medicamento_medicamentos1_idx` (`medicamentos_IdMedicamento`);
+
+--
+-- Indices de la tabla `recetas`
+--
+ALTER TABLE `recetas`
+  ADD PRIMARY KEY (`NumReceta`,`DetalleFichaPaciente_fechaAtencion`,`DetalleFichaPaciente_FichaPaciente_NumeroFicha`),
+  ADD KEY `fk_recetas_DetalleFichaPaciente1_idx` (`DetalleFichaPaciente_fechaAtencion`,`DetalleFichaPaciente_FichaPaciente_NumeroFicha`);
+
+--
+-- Indices de la tabla `Sala`
+--
+ALTER TABLE `Sala`
+  ADD PRIMARY KEY (`idSala`);
+
+--
+-- Indices de la tabla `sexo`
+--
+ALTER TABLE `sexo`
+  ADD PRIMARY KEY (`sexo_id`);
+
+--
+-- Indices de la tabla `SubEspecialidad`
+--
+ALTER TABLE `SubEspecialidad`
+  ADD PRIMARY KEY (`idSubEspecialidad`,`especialidad_IdEspecialidad`),
+  ADD KEY `fk_SubEspecialidad_especialidad1_idx` (`especialidad_IdEspecialidad`);
+
+--
+-- Indices de la tabla `Turnos`
+--
+ALTER TABLE `Turnos`
+  ADD PRIMARY KEY (`idTurnos`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `Horario`
+--
+ALTER TABLE `Horario`
+  MODIFY `Horario_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `Bloque/turnos`
+--
+ALTER TABLE `Bloque/turnos`
+  ADD CONSTRAINT `fk_Bloque_has_Turnos_Bloque1` FOREIGN KEY (`Bloque_idBloque`) REFERENCES `Bloque` (`idBloque`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Bloque_has_Turnos_Turnos1` FOREIGN KEY (`Turnos_idTurnos`) REFERENCES `Turnos` (`idTurnos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `Consulta`
+--
+ALTER TABLE `Consulta`
+  ADD CONSTRAINT `fk_Consulta_Medico1` FOREIGN KEY (`Medico_Personas_Rut`) REFERENCES `Medico` (`Personas_Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Consulta_Paciente1` FOREIGN KEY (`Paciente_Personas_Rut`) REFERENCES `Paciente` (`Personas_Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `DetalleFichaPaciente`
+--
+ALTER TABLE `DetalleFichaPaciente`
+  ADD CONSTRAINT `fk_DetalleFichaPaciente_FichaPaciente1` FOREIGN KEY (`FichaPaciente_NumeroFicha`) REFERENCES `FichaPaciente` (`NumeroFicha`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_DetalleFichaPaciente_Medico1` FOREIGN KEY (`Medico_Personas_Rut`) REFERENCES `Medico` (`Personas_Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `FichaPaciente`
+--
+ALTER TABLE `FichaPaciente`
+  ADD CONSTRAINT `fk_FichaPaciente_Paciente1` FOREIGN KEY (`Paciente_Personas_Rut`) REFERENCES `Paciente` (`Personas_Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `Horario`
+--
+ALTER TABLE `Horario`
+  ADD CONSTRAINT `fk_Horario_Dia1` FOREIGN KEY (`Dia_idDia`) REFERENCES `Dia` (`idDia`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Horario_Estado1` FOREIGN KEY (`Estado_Estado_id`) REFERENCES `Estado` (`Estado_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Medico_has_Dia_Medico1` FOREIGN KEY (`Medico_Personas_Rut`) REFERENCES `Medico` (`Personas_Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `Horario_has_Turnos`
+--
+ALTER TABLE `Horario_has_Turnos`
+  ADD CONSTRAINT `fk_Horario_has_Turnos_Horario1` FOREIGN KEY (`Horario_Horario_id`) REFERENCES `Horario` (`Horario_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Horario_has_Turnos_Turnos1` FOREIGN KEY (`Turnos_idTurnos`) REFERENCES `Turnos` (`idTurnos`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `lab/med`
+--
+ALTER TABLE `lab/med`
+  ADD CONSTRAINT `fk_lab/med_laboratorio1` FOREIGN KEY (`laboratorio_IdLaboratorio`) REFERENCES `laboratorio` (`IdLaboratorio`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_lab/med_medicamentos1` FOREIGN KEY (`medicamentos_IdMedicamento`) REFERENCES `medicamentos` (`IdMedicamento`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `Medico`
+--
+ALTER TABLE `Medico`
+  ADD CONSTRAINT `fk_Medico_Personas` FOREIGN KEY (`Personas_Rut`) REFERENCES `Personas` (`Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Medico_Sala1` FOREIGN KEY (`Sala_idSala`) REFERENCES `Sala` (`idSala`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `Medico_has_Especialidad`
+--
+ALTER TABLE `Medico_has_Especialidad`
+  ADD CONSTRAINT `fk_Medico_has_Especialidad_Especialidad1` FOREIGN KEY (`Especialidad_IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Medico_has_Especialidad_Medico1` FOREIGN KEY (`Medico_Personas_Rut`) REFERENCES `Medico` (`Personas_Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `Paciente`
+--
+ALTER TABLE `Paciente`
+  ADD CONSTRAINT `fk_Paciente_Personas1` FOREIGN KEY (`Personas_Rut`) REFERENCES `Personas` (`Rut`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `Personas`
+--
+ALTER TABLE `Personas`
+  ADD CONSTRAINT `fk_Personas_estado_civil1` FOREIGN KEY (`estado_civil_estci_id`) REFERENCES `estado_civil` (`estci_id`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_Personas_sexo1` FOREIGN KEY (`sexo_sexo_id`) REFERENCES `sexo` (`sexo_id`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `receta/medicamento`
+--
+ALTER TABLE `receta/medicamento`
+  ADD CONSTRAINT `fk_receta/medicamento_medicamentos1` FOREIGN KEY (`medicamentos_IdMedicamento`) REFERENCES `medicamentos` (`IdMedicamento`) ON DELETE NO ACTION ON UPDATE NO ACTION,
+  ADD CONSTRAINT `fk_receta/medicamento_recetas1` FOREIGN KEY (`recetas_NumReceta`) REFERENCES `recetas` (`NumReceta`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `recetas`
+--
+ALTER TABLE `recetas`
+  ADD CONSTRAINT `fk_recetas_DetalleFichaPaciente1` FOREIGN KEY (`DetalleFichaPaciente_fechaAtencion`, `DetalleFichaPaciente_FichaPaciente_NumeroFicha`) REFERENCES `DetalleFichaPaciente` (`fechaAtencion`, `FichaPaciente_NumeroFicha`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+--
+-- Filtros para la tabla `SubEspecialidad`
+--
+ALTER TABLE `SubEspecialidad`
+  ADD CONSTRAINT `fk_SubEspecialidad_especialidad1` FOREIGN KEY (`especialidad_IdEspecialidad`) REFERENCES `Especialidad` (`IdEspecialidad`) ON DELETE NO ACTION ON UPDATE NO ACTION;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
